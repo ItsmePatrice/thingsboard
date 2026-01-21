@@ -16,5 +16,5 @@ jobs:
           java-version: 17
           distribution: temurin
 
-      - name: Build project
+      - name: Build project and run tests
         run: mvn clean test
