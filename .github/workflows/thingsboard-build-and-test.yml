@@ -7,8 +7,6 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
-
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
@@ -16,9 +14,18 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
-          java-version: 17
           distribution: temurin
+          java-version: 17
           cache: maven
 
-      - name: Build project and run unit tests
-        run: mvn clean test -B
+      - name: Verify Docker availability
+        run: |
+          docker --version
+          docker info || true
+
+      - name: Build and run unit tests
+        run: |
+          mvn clean test \
+            -DskipITs=true \
+            -DforkCount=1 \
+            -DreuseForks=false
