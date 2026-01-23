@@ -23,9 +23,6 @@ jobs:
           docker --version
           docker info || true
 
-      - name: Build and run unit tests
-        run: |
-          mvn clean test \
-            -DskipITs=true \
-            -DforkCount=1 \
-            -DreuseForks=false
+      - name: Run tests
+        run: mvn test
+
