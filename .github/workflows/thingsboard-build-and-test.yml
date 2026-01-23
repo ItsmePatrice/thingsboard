@@ -23,6 +23,17 @@ jobs:
           docker --version
           docker info || true
 
-      - name: Run tests
-        run: mvn test
+      - name: Compile project
+        run: mvn clean install -DskipTests
 
+      - name: Build local Docker images for tests
+        run: mvn clean install -Ddockerfile.skip=false
+
+      - name: Docker image build verification
+        run: docker image ls
+
+      - name: Checkout to the test directory
+        run: cd /msa/black-box-tests
+
+      - name: Run black box tests without UI tests (unit tests)
+        run: mvn clean install -DblackBoxTests.skip=false -DblackBoxTests.redisSsl=true
