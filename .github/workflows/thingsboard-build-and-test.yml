@@ -24,7 +24,7 @@ jobs:
           docker info || true
 
       - name: Compile project
-        run: mvn clean install -DskipTests
+        run: mvn clean install -DskipTests -Dlicense.skip=true
 
       - name: Build local Docker images for tests
         run: mvn clean install -Ddockerfile.skip=false
