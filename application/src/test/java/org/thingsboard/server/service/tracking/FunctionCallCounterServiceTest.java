@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Slf4j
 @SpringBootTest
@@ -80,19 +81,19 @@ public class FunctionCallCounterServiceTest {
         assertEquals(0, functionCallCounterService.getCallCount(functionName));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void shouldThrowExceptionForNull() {
-        functionCallCounterService.validateFunctionName(null);
+        assertThrows(IllegalArgumentException.class, () -> functionCallCounterService.validateFunctionName(null));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void shouldThrowExceptionForEmptyString() {
-        functionCallCounterService.validateFunctionName("");
+        assertThrows(IllegalArgumentException.class, () -> functionCallCounterService.validateFunctionName(""));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void shouldThrowExceptionForFunctionNameWithSpaces() {
-        functionCallCounterService.validateFunctionName("invalid function name");
+        assertThrows(IllegalArgumentException.class, () -> functionCallCounterService.validateFunctionName("invalid function name"));
     }
 
     @Test()
