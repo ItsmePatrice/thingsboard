@@ -57,6 +57,8 @@ import org.thingsboard.server.service.security.model.SecurityUser;
 import org.thingsboard.server.service.security.model.UserPrincipal;
 import org.thingsboard.server.service.security.model.token.JwtTokenFactory;
 import org.thingsboard.server.service.security.system.SystemSecurityService;
+import org.thingsboard.server.service.tracking.FunctionCallCounterService;
+
 
 @RestController
 @TbCoreComponent
@@ -154,6 +156,7 @@ public class AuthController extends BaseController {
             @RequestBody ResetPasswordEmailRequest resetPasswordByEmailRequest,
             HttpServletRequest request) throws ThingsboardException {
         try {
+            functionCallCounterService.recordCall("requestResetPasswordByEmail");
             String email = resetPasswordByEmailRequest.getEmail();
             UserCredentials userCredentials = userService.requestPasswordReset(TenantId.SYS_TENANT_ID, email);
             User user = userService.findUserById(TenantId.SYS_TENANT_ID, userCredentials.getUserId());
