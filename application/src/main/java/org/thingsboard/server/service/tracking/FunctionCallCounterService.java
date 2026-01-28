@@ -1,3 +1,11 @@
+package org.thingsboard.server.service.tracking;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
+
 @Service
 @Slf4j
 public class FunctionCallCounterService {

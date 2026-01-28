@@ -76,6 +76,7 @@ public class AuthController extends BaseController {
     private final SecuritySettingsService securitySettingsService;
     private final RateLimitService rateLimitService;
     private final ApplicationEventPublisher eventPublisher;
+    private final FunctionCallCounterService functionCallCounterService;
 
 
     @ApiOperation(value = "Get current User (getUser)",
