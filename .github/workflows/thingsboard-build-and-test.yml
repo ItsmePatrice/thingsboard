@@ -2,7 +2,7 @@ name: thingsboard-build-and-test
 
 on:
   push:
-    branches: [ release-4.2 ]
+    branches: [release-4.2]
 
 jobs:
   build-and-test:
@@ -17,11 +17,6 @@ jobs:
           distribution: temurin
           java-version: 17
           cache: maven
-
-      - name: Verify Docker availability
-        run: |
-          docker --version
-          docker info || true
 
       - name: Run unit tests
         run: mvn test
