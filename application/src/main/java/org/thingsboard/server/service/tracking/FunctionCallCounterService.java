@@ -12,7 +12,11 @@ public class FunctionCallCounterService {
 
     private final ConcurrentHashMap<String, AtomicInteger> counters = new ConcurrentHashMap<>();
 
-    private void validateFunctionName(String functionName) {
+    public void clearCounters() {
+        counters.clear();
+    }
+
+    public void validateFunctionName(String functionName) {
         if (functionName == null) {
             throw new IllegalArgumentException("Function name cannot be null");
         }
@@ -36,13 +40,7 @@ public class FunctionCallCounterService {
     }
 
     public int getCallCount(String functionName) {
-        try {
-            validateFunctionName(functionName);
-            AtomicInteger count = counters.get(functionName);
-            return count != null ? count.get() : 0;
-        } catch (IllegalArgumentException e) {
-            log.error("Failed to get call count: ", e.getMessage());
-            return 0;
-        }
+        AtomicInteger count = counters.get(functionName);
+        return count != null ? count.get() : 0;
     }
 }
