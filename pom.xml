@@ -835,6 +835,8 @@
                             <exclude>**/test/resources/lwm2m/**</exclude>
                             <exclude>**/resources/lwm2m/models/**</exclude>
                             <exclude>src/main/data/resources/**</exclude>
+                            <exclude>**/*.monitoring</exclude>
+                            <exclude>**/lombok.config</exclude>
                         </excludes>
                         <mapping>
                             <proto>JAVADOC_STYLE</proto>
