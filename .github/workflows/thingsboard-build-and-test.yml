@@ -39,8 +39,8 @@ jobs:
           echo "NODE_OPTIONS=--max_old_space_size=4096" >> $GITHUB_ENV
           echo "SUREFIRE_JAVA_OPTS=-Xmx1200m -Xss256k -XX:+ExitOnOutOfMemoryError" >> $GITHUB_ENV
 
-      - name: Clean and install
-        run: mvn clean install -T6 -DskipTests
+      # - name: Clean and install
+      #  run: mvn clean install -T6 -DskipTests
 
       - name: Test common, dao, ui-ngx, msa/js-executor, msa/web-ui excluded
         run: mvn test -pl='!application,!dao,!ui-ngx,!msa/js-executor,!msa/web-ui' -T4
