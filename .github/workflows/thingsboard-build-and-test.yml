@@ -40,10 +40,10 @@ jobs:
           echo "SUREFIRE_JAVA_OPTS=-Xmx1200m -Xss256k -XX:+ExitOnOutOfMemoryError" >> $GITHUB_ENV
 
       # - name: Clean and install
-      #  run: mvn clean install -T6 -DskipTests
+      #  run: mvn clean install -T2 -DskipTests
 
       - name: Test common, dao, ui-ngx, msa/js-executor, msa/web-ui excluded
-        run: mvn test -pl='!application,!dao,!ui-ngx,!msa/js-executor,!msa/web-ui' -T4
+        run: mvn test -pl='!application,!dao,!ui-ngx,!msa/js-executor,!msa/web-ui'
 
       - name: Test dao module
         run: mvn test -pl dao -Dparallel=packages -DforkCount=4
