@@ -49,19 +49,19 @@ jobs:
         run: mvn test -pl dao -Dparallel=packages -DforkCount=4
 
       - name: Test application - edge
-        run: mvn test -pl application -Dsurefire.excludes='**/nosql/*Test.java' -Dtest='org.thingsboard.server.edge.**' -DforkCount=4 -Dparallel=packages -Dsurefire.rerunFailingTestsCount=2 -Dsurefire.failOnFlakeCount=5
+        run: mvn test -pl application -Dsurefire.excludes='**/nosql/*Test.java' -Dtest='org.thingsboard.server.edge.**' -DforkCount=1 -Dparallel=none -Dsurefire.rerunFailingTestsCount=2 -Dsurefire.failOnFlakeCount=5
 
       - name: Test application - service
-        run: mvn test -pl application -Dsurefire.excludes='**/nosql/*Test.java' -Dtest='org.thingsboard.server.service.**' -DforkCount=6 -Dparallel=packages -Dsurefire.rerunFailingTestsCount=2 -Dsurefire.failOnFlakeCount=5
+        run: mvn test -pl application -Dsurefire.excludes='**/nosql/*Test.java' -Dtest='org.thingsboard.server.service.**' -DforkCount=1 -Dparallel=none -Dsurefire.rerunFailingTestsCount=2 -Dsurefire.failOnFlakeCount=5
 
       - name: Test application - transport mqtt
-        run: mvn test -pl application -Dsurefire.excludes='**/nosql/*Test.java' -Dtest='org.thingsboard.server.transport.mqtt.**' -DforkCount=6 -Dparallel=classes -Dsurefire.rerunFailingTestsCount=2 -Dsurefire.failOnFlakeCount=5
+        run: mvn test -pl application -Dsurefire.excludes='**/nosql/*Test.java' -Dtest='org.thingsboard.server.transport.mqtt.**' -DforkCount=1 -Dparallel=none -Dsurefire.rerunFailingTestsCount=2 -Dsurefire.failOnFlakeCount=5
 
       - name: Test application - transport coap
-        run: mvn test -pl application -Dsurefire.excludes='**/nosql/*Test.java' -Dtest='org.thingsboard.server.transport.coap.**' -DforkCount=6 -Dparallel=classes -Dsurefire.rerunFailingTestsCount=2 -Dsurefire.failOnFlakeCount=5
+        run: mvn test -pl application -Dsurefire.excludes='**/nosql/*Test.java' -Dtest='org.thingsboard.server.transport.coap.**' -DforkCount=1 -Dparallel=none -Dsurefire.rerunFailingTestsCount=2 -Dsurefire.failOnFlakeCount=5
 
       - name: Test application - transport lwm2m
-        run: mvn test -pl application -Dsurefire.excludes='**/nosql/*Test.java' -Dtest='org.thingsboard.server.transport.lwm2m.**' -DforkCount=6 -Dparallel=packages -Dsurefire.rerunFailingTestsCount=2 -Dsurefire.failOnFlakeCount=5
+        run: mvn test -pl application -Dsurefire.excludes='**/nosql/*Test.java' -Dtest='org.thingsboard.server.transport.lwm2m.**' -DforkCount=1 -Dparallel=none -Dsurefire.rerunFailingTestsCount=2 -Dsurefire.failOnFlakeCount=5
 
       - name: Test application - test suites
         run: mvn test -pl application -Dsurefire.excludes='**/nosql/*Test.java' -Dtest='**/*TestSuite.java' -DforkCount=4 -Dparallel=classes -Dsurefire.rerunFailingTestsCount=2 -Dsurefire.failOnFlakeCount=5
