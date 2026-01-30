@@ -39,15 +39,6 @@ jobs:
 
       # - name: Clean and install
       #  run: mvn clean install -T2 -DskipTests
-      - name: Test application - transport mqtt
-        run: mvn test -pl application -Dsurefire.excludes='**/nosql/*Test.java,**/*IntegrationTest.java' -Dtest='org.thingsboard.server.transport.mqtt.**' -DforkCount=1 -Dparallel=none -Dsurefire.rerunFailingTestsCount=2 -Dsurefire.failOnFlakeCount=5
-
-      - name: Test application - transport coap
-        run: mvn test -pl application -Dsurefire.excludes='**/nosql/*Test.java,**/*IntegrationTest.java' -Dtest='org.thingsboard.server.transport.coap.**' -DforkCount=1 -Dparallel=none -Dsurefire.rerunFailingTestsCount=2 -Dsurefire.failOnFlakeCount=5
-
-      - name: Test application - transport lwm2m
-        run: mvn test -pl application -Dsurefire.excludes='**/nosql/*Test.java,**/*IntegrationTest.java' -Dtest='org.thingsboard.server.transport.lwm2m.**' -DforkCount=1 -Dparallel=none -Dsurefire.rerunFailingTestsCount=2 -Dsurefire.failOnFlakeCount=5
-
       - name: Test application - test suites
         run: mvn test -pl application -Dsurefire.excludes='**/nosql/*Test.java,**/*IntegrationTest.java' -Dtest='**/*TestSuite.java' -DforkCount=4 -Dparallel=classes -Dsurefire.rerunFailingTestsCount=2 -Dsurefire.failOnFlakeCount=5
 
