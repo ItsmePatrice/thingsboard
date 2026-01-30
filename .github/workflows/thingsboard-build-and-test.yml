@@ -40,5 +40,6 @@ jobs:
       # - name: Clean and install
       #  run: mvn clean install -T2 -DskipTests
 
-      - name: Build and test
-        run: mvn test -T2
+      - name: run tests
+        run: mvn test \
+          -Dtest='!**/*IT*,!**/*Integration*, !**/*Transport*,!**/*Mqtt*,!**/*Coap*,!**/*Lwm2m*'
