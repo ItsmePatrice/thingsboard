@@ -40,6 +40,9 @@ public class FunctionCallCounterService {
     }
 
     public int getCallCount(String functionName) {
+        if (functionName == null) {
+            return 0;
+        }
         AtomicInteger count = counters.get(functionName);
         return count != null ? count.get() : 0;
     }
