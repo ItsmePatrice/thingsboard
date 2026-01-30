@@ -41,6 +41,4 @@ jobs:
       #  run: mvn clean install -T2 -DskipTests
 
       - name: run tests
-        run: mvn test \
-          -pl '!web-ui,!web-ui-microservice' \
-          -Dtest='!**/*IT*,!**/*Integration*,!**/*Transport*,!**/*Mqtt*'
+        run: mvn test -T2
