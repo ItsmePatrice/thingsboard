@@ -39,6 +39,9 @@ jobs:
 
       # - name: Clean and install
       #  run: mvn clean install -T2 -DskipTests
+      - name: Test application - service
+        run: mvn test -pl application -Dsurefire.excludes='**/nosql/*Test.java' -Dtest='org.thingsboard.server.service.**' -DforkCount=1 -Dparallel=none -Dsurefire.rerunFailingTestsCount=2 -Dsurefire.failOnFlakeCount=5
+
       - name: Test application - controller
         run: mvn test -pl application -Dsurefire.excludes='**/nosql/*Test.java' -Dtest='org.thingsboard.server.controller.**' -DforkCount=1 -Dparallel=none -Dsurefire.rerunFailingTestsCount=2 -Dsurefire.failOnFlakeCount=5
 
@@ -50,9 +53,6 @@ jobs:
 
       - name: Test application - edge
         run: mvn test -pl application -Dsurefire.excludes='**/nosql/*Test.java' -Dtest='org.thingsboard.server.edge.**' -DforkCount=1 -Dparallel=none -Dsurefire.rerunFailingTestsCount=2 -Dsurefire.failOnFlakeCount=5
-
-      - name: Test application - service
-        run: mvn test -pl application -Dsurefire.excludes='**/nosql/*Test.java' -Dtest='org.thingsboard.server.service.**' -DforkCount=1 -Dparallel=none -Dsurefire.rerunFailingTestsCount=2 -Dsurefire.failOnFlakeCount=5
 
       - name: Test application - transport mqtt
         run: mvn test -pl application -Dsurefire.excludes='**/nosql/*Test.java' -Dtest='org.thingsboard.server.transport.mqtt.**' -DforkCount=1 -Dparallel=none -Dsurefire.rerunFailingTestsCount=2 -Dsurefire.failOnFlakeCount=5
