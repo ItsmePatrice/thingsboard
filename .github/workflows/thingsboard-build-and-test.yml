@@ -42,4 +42,5 @@ jobs:
 
       - name: run tests
         run: mvn test \
-          -Dtest='!**/*IT*,!**/*Integration*, !**/*Transport*,!**/*Mqtt*,!**/*Coap*,!**/*Lwm2m*'
+          -pl '!web-ui,!web-ui-microservice' \
+          -Dtest='!**/*IT*,!**/*Integration*,!**/*Transport*,!**/*Mqtt*'
