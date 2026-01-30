@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Slf4j
-@SpringBootTest
+@SpringBootTest(classes = FunctionCallCounterService.class)
 @ActiveProfiles("test")
 public class FunctionCallCounterServiceTest {
 
