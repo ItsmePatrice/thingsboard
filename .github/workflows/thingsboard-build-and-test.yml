@@ -23,6 +23,10 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    env:
+      MAVEN_OPTS: -Xmx1024m
+      NODE_OPTIONS: --max-old-space-size=4096
+      SUREFIRE_JAVA_OPTS: "-Xmx1200m -Xss256k -XX:+ExitOnOutOfMemoryError"
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
@@ -33,23 +37,16 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Set environment variables
-        run: |
-          echo "MAVEN_OPTS=-Xmx1024m" >> $GITHUB_ENV
-          echo "NODE_OPTIONS=--max_old_space_size=4096" >> $GITHUB_ENV
-          echo "SUREFIRE_JAVA_OPTS=-Xmx1200m -Xss256k -XX:+ExitOnOutOfMemoryError" >> $GITHUB_ENV
-
       # - name: Clean and install
       #  run: mvn clean install -T2 -DskipTests
+      - name: Test application - controller
+        run: mvn test -pl application -Dsurefire.excludes='**/nosql/*Test.java' -Dtest='org.thingsboard.server.controller.**' -DforkCount=1 -Dparallel=none -Dsurefire.rerunFailingTestsCount=2 -Dsurefire.failOnFlakeCount=5
 
       - name: Test common, dao, ui-ngx, msa/js-executor, msa/web-ui excluded
         run: mvn test -pl='!application,!dao,!ui-ngx,!msa/js-executor,!msa/web-ui'
 
       - name: Test dao module
         run: mvn test -pl dao -Dparallel=packages -DforkCount=4
-
-      - name: Test application - controller
-        run: mvn test -pl application -Dsurefire.excludes='**/nosql/*Test.java' -Dtest='org.thingsboard.server.controller.**' -DforkCount=6 -Dparallel=classes -Dsurefire.rerunFailingTestsCount=2 -Dsurefire.failOnFlakeCount=5
 
       - name: Test application - edge
         run: mvn test -pl application -Dsurefire.excludes='**/nosql/*Test.java' -Dtest='org.thingsboard.server.edge.**' -DforkCount=4 -Dparallel=packages -Dsurefire.rerunFailingTestsCount=2 -Dsurefire.failOnFlakeCount=5
