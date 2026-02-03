@@ -37,19 +37,17 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Build project
-        run: mvn clean install -DskipTests
+      - name: Test dao module
+        run: mvn test -pl dao -Dparallel=packages -DforkCount=4
 
-      - name: start thingsboard (background)
-        run: |
-          java -jar application/target/thingsboard-4.2.1.1-boot.jar > tb.log 2>&1 &
-          sleep 60
+      - name: Test application - edge
+        run: mvn test -pl application -Dsurefire.excludes='**/nosql/*Test.java,**/*IntegrationTest.java' -Dtest='org.thingsboard.server.edge.**' -DforkCount=1 -Dparallel=none -Dsurefire.rerunFailingTestsCount=2 -Dsurefire.failOnFlakeCount=5
+
+      - name: Test common, dao, ui-ngx, msa/js-executor, msa/web-ui excluded
+        run: mvn test -pl='!application,!dao,!ui-ngx,!msa/js-executor,!msa/web-ui'
 
       - name: Test application - test suites
         run: mvn test -pl application -Dsurefire.excludes='**/nosql/*Test.java,**/*IntegrationTest.java' -Dtest='**/*TestSuite.java' -DforkCount=4 -Dparallel=classes -Dsurefire.rerunFailingTestsCount=2 -Dsurefire.failOnFlakeCount=5
-
-      - name: Test application - remaining tests
-        run: mvn test -pl application '-Dtest=!**/nosql/*Test.java,!org.thingsboard.server.controller.**,!org.thingsboard.server.edge.**,!org.thingsboard.server.service.**,!org.thingsboard.server.transport.mqtt.**,!org.thingsboard.server.transport.coap.**,!org.thingsboard.server.transport.lwm2m.**,!**/*IntegrationTest.java' -DforkCount=6 -Dparallel=packages -Dsurefire.rerunFailingTestsCount=2 -Dsurefire.failOnFlakeCount=5
 
       - name: Test application - service
         run: mvn test -pl application -Dsurefire.excludes='**/nosql/*Test.java,**/*IntegrationTest.java' -Dtest='org.thingsboard.server.service.**' -DforkCount=1 -Dparallel=none -Dsurefire.rerunFailingTestsCount=2 -Dsurefire.failOnFlakeCount=5
@@ -57,11 +55,13 @@ jobs:
       - name: Test application - controller
         run: mvn test -pl application -Dsurefire.excludes='**/nosql/*Test.java,**/*IntegrationTest.java' -Dtest='org.thingsboard.server.controller.**' -DforkCount=1 -Dparallel=none -Dsurefire.rerunFailingTestsCount=2 -Dsurefire.failOnFlakeCount=5
 
-      - name: Test common, dao, ui-ngx, msa/js-executor, msa/web-ui excluded
-        run: mvn test -pl='!application,!dao,!ui-ngx,!msa/js-executor,!msa/web-ui'
+      - name: Test application - remaining tests
+        run: mvn test -pl application '-Dtest=!**/nosql/*Test.java,!org.thingsboard.server.controller.**,!org.thingsboard.server.edge.**,!org.thingsboard.server.service.**,!org.thingsboard.server.transport.mqtt.**,!org.thingsboard.server.transport.coap.**,!org.thingsboard.server.transport.lwm2m.**,!**/*IntegrationTest.java' -DforkCount=6 -Dparallel=packages -Dsurefire.rerunFailingTestsCount=2 -Dsurefire.failOnFlakeCount=5
 
-      - name: Test dao module
-        run: mvn test -pl dao -Dparallel=packages -DforkCount=4
+      - name: Build project
+        run: mvn clean install -DskipTests
 
-      - name: Test application - edge
-        run: mvn test -pl application -Dsurefire.excludes='**/nosql/*Test.java,**/*IntegrationTest.java' -Dtest='org.thingsboard.server.edge.**' -DforkCount=1 -Dparallel=none -Dsurefire.rerunFailingTestsCount=2 -Dsurefire.failOnFlakeCount=5
+      - name: start thingsboard (background)
+        run: |
+          java -jar application/target/thingsboard-4.2.1.1-boot.jar > tb.log 2>&1 &
+          sleep 60
