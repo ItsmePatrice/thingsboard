@@ -40,5 +40,8 @@ jobs:
       # - name: Clean and install
       #  run: mvn clean install -T2 -DskipTests
 
+      - name: comppile project
+        run: mvn clean install -DskipTests
+
       - name: run tests
         run: mvn test -T2
