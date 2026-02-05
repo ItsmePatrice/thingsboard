@@ -43,7 +43,7 @@ jobs:
       - name: Test application - edge
         run: mvn test -pl application -Dsurefire.excludes='**/nosql/*Test.java,**/*IntegrationTest.java' -Dtest='org.thingsboard.server.edge.**' -DforkCount=1 -Dparallel=none -Dsurefire.rerunFailingTestsCount=2 -Dsurefire.failOnFlakeCount=5
 
-      - name: Test common, dao, ui-ngx, msa/js-executor, msa/web-ui excluded
+      - name: Test common
         run: mvn test -pl='!application,!dao,!ui-ngx,!msa/js-executor,!msa/web-ui'
 
       - name: Test application - test suites

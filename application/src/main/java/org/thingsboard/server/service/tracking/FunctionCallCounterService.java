@@ -28,6 +28,17 @@ public class FunctionCallCounterService {
 
     private final ConcurrentHashMap<String, AtomicInteger> counters = new ConcurrentHashMap<>();
 
+    public void recordCall(String functionName) {
+        try {
+            validateFunctionName(functionName);
+            counters
+                .computeIfAbsent(functionName, k -> new AtomicInteger(0))
+                .incrementAndGet();
+        } catch (IllegalArgumentException e) {
+            log.error("Failed to record function call: ", e.getMessage());
+        }
+    }
+    
     public void clearCounters() {
         counters.clear();
     }
@@ -44,16 +55,6 @@ public class FunctionCallCounterService {
         }
     }
 
-    public void recordCall(String functionName) {
-        try {
-            validateFunctionName(functionName);
-            counters
-                .computeIfAbsent(functionName, k -> new AtomicInteger(0))
-                .incrementAndGet();
-        } catch (IllegalArgumentException e) {
-            log.error("Failed to record function call: ", e.getMessage());
-        }
-    }
 
     public int getCallCount(String functionName) {
         if (functionName == null) {
