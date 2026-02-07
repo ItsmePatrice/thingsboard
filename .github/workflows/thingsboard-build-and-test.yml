@@ -61,7 +61,7 @@ jobs:
       - name: Build project
         run: mvn clean install -DskipTests
 
-      - name: Start Thingsboard
+      - name: Start ThingsBoard
         run: |
           java -jar application/target/thingsboard-4.2.1.1-boot.jar > tb.log 2>&1 &
           sleep 60
